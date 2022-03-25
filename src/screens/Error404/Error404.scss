@@ -1,0 +1,59 @@
+section.Error404 {
+  transition: all 0.6s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #26263a;
+  .error-main {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .fof h1 {
+    font-size: 10vw;
+    display: inline-block;
+    padding-right: 12px;
+    animation: type 0.5s alternate infinite;
+    margin: 0;
+  }
+  @keyframes type {
+    from {
+      box-shadow: inset -3px 0px 0px #6eb6ff;
+    }
+    to {
+      box-shadow: inset -3px 0px 0px transparent;
+    }
+  }
+
+  h4 {
+    width: 90%;
+    font-size: 2rem;
+    font-weight: 300;
+    text-align: center;
+  }
+
+  p {
+    text-align: center;
+    font-size: 1.5rem;
+    a {
+      color: #7098da;
+      text-decoration: underline;
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    .fof h1 {
+      font-size: 18vw;
+    }
+    h4 {
+      font-size: 1.8rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+}

@@ -1,0 +1,21 @@
+div.header {
+  height: 35vh;
+  position: relative;
+  margin-left: -1px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    background: #f2fdff;
+    position: absolute;
+    bottom: -22%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120%;
+    height: 15vh;
+    border-radius: 50%;
+  }
+}
