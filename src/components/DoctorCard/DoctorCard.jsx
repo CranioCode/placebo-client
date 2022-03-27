@@ -33,7 +33,7 @@ const DoctorCard = ({ onClick, doctor }) => {
         <div className="absolute right-[5%] top-1/2 -translate-y-1/2 flex justify-center items-center">
           <span className="mr-2 text-2xl">{doctor.rating.value}</span>
           <img
-            src="/img/assets/star.png"
+            src="/src/img/assets/star.png"
             alt="rating"
             className="h-[25px] w-[25px]"
           />

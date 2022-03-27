@@ -5,7 +5,7 @@ const Home = () => {
     <section>
       <div
         className="header"
-        style={{ backgroundImage: "url(/img/assets/header.png)" }}></div>
+        style={{ backgroundImage: "url(/src/img/assets/header.png)" }}></div>
     </section>
   );
 };

@@ -1,3 +1,13 @@
+:root {
+  --navbar-height-pc: 9vh;
+  --footer-height-pc: 7vh;
+}
+
+main {
+  min-height: calc(100vh - var(--navbar-height-pc) - var(--footer-height-pc));
+  @apply bg-back;
+}
+
 .App {
   text-align: center;
 }

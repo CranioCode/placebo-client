@@ -12,7 +12,7 @@ const Navbar = ({ onProfileClick }) => {
     <nav className="bg-tertiary text-white flex items-center justify-between px-8">
       <Link to="/" className="flex items-center w-1/4">
         <div className="bg-white rounded-full">
-          <img src="/img/assets/icon.png" alt="Placebo" className="h-[7vh]" />
+          <img src="/src/img/assets/icon.png" alt="Placebo" className="h-[7vh]" />
         </div>
         <span className="text-3xl ml-4">Placebo</span>
       </Link>

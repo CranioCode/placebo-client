@@ -68,7 +68,7 @@ const OTPVerification = () => {
           } flex justify-center items-center`}
         >
           {isSuccess && (
-            <img className="h-2/6 mr-4" src="/img/assets/tick.png" alt="Done" />
+            <img className="h-2/6 mr-4" src="/src/img/assets/tick.png" alt="Done" />
           )}
           {!error && (
             <span className="text-tertiary text-3xl font-bold">{message}</span>
@@ -77,7 +77,7 @@ const OTPVerification = () => {
             <>
               <img
                 className="h-2/6 mr-4"
-                src="/img/assets/cross.png"
+                src="/src/img/assets/cross.png"
                 alt="Done"
               />
               <span className="text-rose-500 text-3xl font-bold">{error}</span>

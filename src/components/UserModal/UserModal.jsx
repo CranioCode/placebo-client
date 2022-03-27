@@ -20,7 +20,7 @@ const UserModal = ({ user }) => {
         </h1>
         {user.verified && (
           <img
-            src="/img/assets/tick.png"
+            src="/src/img/assets/tick.png"
             title="Account verified"
             alt="Verified"
             className="w-[20px]"
@@ -28,7 +28,7 @@ const UserModal = ({ user }) => {
         )}
         {!user.verified && (
           <img
-            src="/img/assets/cross.png"
+            src="/src/img/assets/cross.png"
             title="Account not verified"
             alt="Not Verified"
             className="w-[20px]"

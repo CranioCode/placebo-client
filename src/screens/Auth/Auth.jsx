@@ -157,7 +157,7 @@ const Auth = () => {
         </h2>
         <img
           className="m-auto w-11/12"
-          src="/img/assets/illustration-1.png"
+          src="src/img/assets/illustration-1.png"
           alt="Doctor"
         />
         <span className="block text-lg w-4/5 my-[3vh] mx-auto">
