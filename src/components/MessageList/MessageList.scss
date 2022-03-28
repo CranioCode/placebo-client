@@ -1,0 +1,11 @@
+#messageList::-webkit-scrollbar {
+  width: 0.35rem;
+}
+
+#messageList::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 0.5rem rgba(0, 0, 0, 0.3);
+}
+
+#messageList::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 2rem #7098da;
+}

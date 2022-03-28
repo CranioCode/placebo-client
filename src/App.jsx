@@ -12,6 +12,7 @@ const Auth = lazy(() => import("./screens/Auth"));
 // const OTPVerification = lazy(() => import("./screens/OTPVerification"));
 const Profile = lazy(() => import("./screens/Profile"));
 const Doctors = lazy(() => import("./screens/Doctors"));
+const Chat = lazy(() => import("./screens/Chat"));
 const Error404 = lazy(() => import("./screens/Error404"));
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
             <Route path="/" element={<Home />} />
 
             <Route path="/auth" element={<Auth />} />
+            <Route path="/chat" element={<Chat />} />
 
             {/* OTP Verification */}
             {/* {authCtx.isLoggedIn ? (

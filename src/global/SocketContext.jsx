@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useRef } from "react";
 import { io } from "socket.io-client";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 
 const SocketContext = createContext(); // global socket context
 
@@ -25,7 +25,7 @@ const SocketProvider = ({ children }) => {
   }, []);
 
   return (
-    <SocketContext.Provider value={socket.current}>
+    <SocketContext.Provider value={socket.current || "noSocketContext"}>
       {children}
     </SocketContext.Provider>
   );

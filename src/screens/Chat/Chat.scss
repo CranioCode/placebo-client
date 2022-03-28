@@ -1,0 +1,4 @@
+section#chat {
+  min-height: calc(100vh - var(--navbar-height-pc) - var(--footer-height-pc));
+  max-height: calc(100vh - var(--navbar-height-pc) - var(--footer-height-pc));
+}

@@ -41,6 +41,13 @@ const Navbar = ({ onProfileClick }) => {
         >
           Specialization
         </NavLink>
+        <NavLink
+          to={"/chat"}
+          className={({ isActive }) =>
+            isActive ? "text-xl underline underline-offset-4" : "text-xl"
+          }>
+          Chat
+        </NavLink>
       </div>
       <div className="w-1/4 flex justify-end">
         <Button
