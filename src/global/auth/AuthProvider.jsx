@@ -26,17 +26,27 @@ const AUTH_STATE = {
 
 const authReducer = (state, action) => {
   if (action.type === LOGIN) {
-    //TODO User login
-    return state;
+    return {
+      ...state,
+      user: {
+        ...action.payload,
+      },
+      isLoggedIn: true,
+      isUserFetching: false,
+      error: "",
+    };
   }
 
   if (action.type === LOGOUT) {
-    //TODO User logout
-    return state;
+    return {
+      ...state,
+      user: null,
+      isLoggedIn: false,
+      isUserFetching: false,
+    };
   }
 
   if (action.type === FETCHING) {
-    //TODO User fetching
     return {
       ...state,
       error: action.payload,
