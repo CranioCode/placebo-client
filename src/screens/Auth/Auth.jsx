@@ -1,6 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
 
+// Context
+import AuthContext from "../../global/auth/auth-context";
+
+// Utils
+import { login } from "../../global/auth-helper";
 import {
   dateValidation,
   emailValidation,
@@ -39,7 +44,7 @@ const Auth = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   // Context
-  // const authCtx = useContext(AuthContext);
+  const authCtx = useContext(AuthContext);
 
   useEffect(() => {
     searchParams.get("type") === "register"
@@ -88,42 +93,45 @@ const Auth = () => {
 
   // Handling authentication and error state
   const handleAuthentication = async () => {
+    console.log("I AM HERE");
     //? Authentication using Passport
-    // authCtx.handleFetching();
-    // let data;
-    // try {
-    //   if (authState.isDoctor) {
-    //     if (authState.isLogin) {
-    //       data = await doctorLogin({
-    //         email: authFormData.email,
-    //         password: authFormData.password,
-    //       });
-    //     } else {
-    //       data = await doctorSignUp(authFormData);
-    //     }
-    //     if (data.success) {
-    //       authCtx.logIn({ ...data.data, isDoctor: true });
-    //     } else {
-    //       authCtx.setError(data.data);
-    //     }
-    //   } else {
-    //     if (authState.isLogin) {
-    //       data = await userLogin({
-    //         email: authFormData.email,
-    //         password: authFormData.password,
-    //       });
-    //     } else {
-    //       data = await userSignUp(authFormData);
-    //     }
-    //     if (data.success) {
-    //       authCtx.logIn({ ...data.data, isDoctor: false });
-    //     } else {
-    //       authCtx.setError(data.data);
-    //     }
-    //   }
-    // } catch (error) {
-    //   authCtx.setError(firebaseErrorMessages(error.code));
-    // }
+    authCtx.handleFetching();
+    let data;
+    try {
+      if (authState.isDoctor) {
+        if (authState.isLogin) {
+          data = await login({
+            email: authFormData.email,
+            password: authFormData.password,
+            role: "doctor",
+          });
+        } else {
+          // data = await doctorSignUp(authFormData);
+        }
+        if (data.success) {
+          authCtx.logIn({ ...data.data, role: "doctor" });
+        } else {
+          authCtx.setError(data.error);
+        }
+      } else {
+        if (authState.isLogin) {
+          data = await login({
+            email: authFormData.email,
+            password: authFormData.password,
+            role: "user",
+          });
+        } else {
+          // data = await userSignUp(authFormData);
+        }
+        if (data.success) {
+          authCtx.logIn({ ...data.data, role: "user" });
+        } else {
+          authCtx.setError(data.error);
+        }
+      }
+    } catch (error) {
+      authCtx.setError(error.message);
+    }
   };
 
   useEffect(() => {
