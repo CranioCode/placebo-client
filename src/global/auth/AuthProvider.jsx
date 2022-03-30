@@ -49,8 +49,7 @@ const authReducer = (state, action) => {
   if (action.type === FETCHING) {
     return {
       ...state,
-      error: action.payload,
-      isUserFetching: false,
+      isUserFetching: true,
     };
   }
 
@@ -69,7 +68,24 @@ const AuthProvider = ({ children }) => {
   const [authState, dispatchAuthState] = useReducer(authReducer, AUTH_STATE);
 
   useEffect(() => {
-    //TODO check for cookies and login the user
+    fetch(`${import.meta.env.VITE_BACKEND_API}/auth`, {
+      credentials: "include",
+      headers: {
+        Accepts: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          dispatchAuthState({ type: LOGIN, payload: data.message });
+        } else {
+          dispatchAuthState({ type: ERROR, payload: data.error });
+        }
+      })
+      .catch((error) => {
+        dispatchAuthState({ type: ERROR, payload: "SERVER ERROR" });
+      });
   }, []);
 
   const handleLogin = (user) => {

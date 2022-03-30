@@ -1,15 +1,20 @@
+import { useContext } from "react";
+
 import { Button } from "..";
+
+import { logout } from "../../global/auth-helper";
+
+import AuthContext from "../../global/auth/auth-context";
 
 import "./UserModal.scss";
 
 const UserModal = ({ user }) => {
-  // const authCtx = useContext(AuthContext);
+  const authCtx = useContext(AuthContext);
 
   const handleLogout = async () => {
-    //? Handle Logout here
-    // authCtx.handleFetching();
-    // await logOut();
-    // authCtx.logOut();
+    authCtx.handleFetching();
+    await logout();
+    authCtx.logOut();
   };
 
   return (
