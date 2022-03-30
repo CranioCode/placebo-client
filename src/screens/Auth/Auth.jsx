@@ -5,7 +5,7 @@ import { useSearchParams } from "react-router-dom";
 import AuthContext from "../../global/auth/auth-context";
 
 // Utils
-import { login } from "../../global/auth-helper";
+import { login, signup } from "../../global/auth-helper";
 import {
   dateValidation,
   emailValidation,
@@ -93,7 +93,8 @@ const Auth = () => {
 
   // Handling authentication and error state
   const handleAuthentication = async () => {
-    console.log("I AM HERE");
+    const { fname, lname, dob, dor, email, regNo, password } = authFormData;
+
     //? Authentication using Passport
     authCtx.handleFetching();
     let data;
@@ -101,30 +102,44 @@ const Auth = () => {
       if (authState.isDoctor) {
         if (authState.isLogin) {
           data = await login({
-            email: authFormData.email,
-            password: authFormData.password,
+            email,
+            password,
             role: "doctor",
           });
         } else {
-          // data = await doctorSignUp(authFormData);
+          data = await signup({
+            name: fname + " " + lname,
+            dob: new Date(dob).getTime(),
+            dor: new Date(dor).getTime(),
+            email,
+            regNo,
+            password,
+            role: "doctor",
+          });
         }
         if (data.success) {
-          authCtx.logIn({ ...data.data, role: "doctor" });
+          authCtx.loginSuccess();
         } else {
           authCtx.setError(data.error);
         }
       } else {
         if (authState.isLogin) {
           data = await login({
-            email: authFormData.email,
-            password: authFormData.password,
+            email,
+            password,
             role: "user",
           });
         } else {
-          // data = await userSignUp(authFormData);
+          data = await signup({
+            email,
+            password,
+            name: fname + " " + lname,
+            dob: new Date(dob).getTime(),
+            role: "user",
+          });
         }
         if (data.success) {
-          authCtx.logIn({ ...data.data, role: "user" });
+          authCtx.loginSuccess();
         } else {
           authCtx.setError(data.error);
         }
@@ -143,12 +158,11 @@ const Auth = () => {
     }
   }, [authFormData, authState]);
 
-  //? Changing the error state when there is error in global state
-  // useEffect(() => {
-  //   if (authCtx.error) {
-  //     setError(authCtx.error);
-  //   }
-  // }, [authCtx.error]);
+  useEffect(() => {
+    if (authCtx.error) {
+      setError(authCtx.error);
+    }
+  }, [authCtx.error]);
 
   return (
     <section

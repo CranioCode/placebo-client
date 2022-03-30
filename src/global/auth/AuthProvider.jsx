@@ -2,7 +2,7 @@ import { useEffect, useReducer } from "react";
 
 import AuthContext from "./auth-context";
 
-import { ERROR, FETCHING, LOGIN, LOGOUT } from "./auth-actions";
+import { ERROR, FETCHING, LOGIN, LOGINSUCCESS, LOGOUT } from "./auth-actions";
 
 const AUTH_STATE = {
   user: {
@@ -31,6 +31,15 @@ const authReducer = (state, action) => {
       user: {
         ...action.payload,
       },
+      isLoggedIn: true,
+      isUserFetching: false,
+      error: "",
+    };
+  }
+
+  if (action.type === LOGINSUCCESS) {
+    return {
+      ...state,
       isLoggedIn: true,
       isUserFetching: false,
       error: "",
@@ -92,6 +101,10 @@ const AuthProvider = ({ children }) => {
     dispatchAuthState({ type: LOGIN, payload: user });
   };
 
+  const handleLoginSuccess = (msg) => {
+    dispatchAuthState({ type: LOGINSUCCESS });
+  };
+
   const handleLogout = () => {
     dispatchAuthState({ type: LOGOUT });
   };
@@ -110,6 +123,7 @@ const AuthProvider = ({ children }) => {
     isUserFetching: authState.isUserFetching,
     error: authState.error,
     logIn: handleLogin,
+    loginSuccess: handleLoginSuccess,
     logOut: handleLogout,
     handleFetching: handleUserFetching,
     setError: handleSetError,

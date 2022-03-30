@@ -68,8 +68,8 @@ const Navbar = ({ onProfileClick }) => {
             className="bg-back rounded-full cursor-pointer w-[7vh] h-[7vh] flex justify-center items-center"
           >
             <img
-              src={authCtx.user.profilePic}
-              alt={authCtx.user.name}
+              src={authCtx.user?.profilePic}
+              alt={authCtx.user?.name}
               className="h-full w-full rounded-full object-cover aspect-square"
             />
           </div>
