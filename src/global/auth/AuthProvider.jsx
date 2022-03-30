@@ -2,7 +2,7 @@ import { useEffect, useReducer } from "react";
 
 import AuthContext from "./auth-context";
 
-import { ERROR, FETCHING, LOGIN, LOGOUT } from "./auth-actions";
+import { ERROR, FETCHING, LOGIN, LOGINSUCCESS, LOGOUT } from "./auth-actions";
 
 const AUTH_STATE = {
   user: {
@@ -37,6 +37,15 @@ const authReducer = (state, action) => {
     };
   }
 
+  if (action.type === LOGINSUCCESS) {
+    return {
+      ...state,
+      isLoggedIn: true,
+      isUserFetching: false,
+      error: "",
+    };
+  }
+
   if (action.type === LOGOUT) {
     return {
       ...state,
@@ -49,8 +58,7 @@ const authReducer = (state, action) => {
   if (action.type === FETCHING) {
     return {
       ...state,
-      error: action.payload,
-      isUserFetching: false,
+      isUserFetching: true,
     };
   }
 
@@ -69,11 +77,32 @@ const AuthProvider = ({ children }) => {
   const [authState, dispatchAuthState] = useReducer(authReducer, AUTH_STATE);
 
   useEffect(() => {
-    //TODO check for cookies and login the user
+    fetch(`${import.meta.env.VITE_BACKEND_API}/auth`, {
+      credentials: "include",
+      headers: {
+        Accepts: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          dispatchAuthState({ type: LOGIN, payload: data.message });
+        } else {
+          dispatchAuthState({ type: ERROR, payload: data.error });
+        }
+      })
+      .catch((error) => {
+        dispatchAuthState({ type: ERROR, payload: "SERVER ERROR" });
+      });
   }, []);
 
   const handleLogin = (user) => {
     dispatchAuthState({ type: LOGIN, payload: user });
+  };
+
+  const handleLoginSuccess = (msg) => {
+    dispatchAuthState({ type: LOGINSUCCESS });
   };
 
   const handleLogout = () => {
@@ -94,6 +123,7 @@ const AuthProvider = ({ children }) => {
     isUserFetching: authState.isUserFetching,
     error: authState.error,
     logIn: handleLogin,
+    loginSuccess: handleLoginSuccess,
     logOut: handleLogout,
     handleFetching: handleUserFetching,
     setError: handleSetError,

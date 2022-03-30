@@ -1,24 +1,29 @@
+import { useContext } from "react";
+
 import { Button } from "..";
+
+import { logout } from "../../global/auth-helper";
+
+import AuthContext from "../../global/auth/auth-context";
 
 import "./UserModal.scss";
 
 const UserModal = ({ user }) => {
-  // const authCtx = useContext(AuthContext);
+  const authCtx = useContext(AuthContext);
 
   const handleLogout = async () => {
-    //? Handle Logout here
-    // authCtx.handleFetching();
-    // await logOut();
-    // authCtx.logOut();
+    authCtx.handleFetching();
+    await logout();
+    authCtx.logOut();
   };
 
   return (
     <div className="userModal bg-quaternary w-[20vw] z-10 absolute right-[2rem] px-[0.2vw] rounded-b-[6px]">
       <div className="flex justify-center items-center flex-wrap h-[10vh]">
         <h1 className="text-xl font-bold text-center text-dark mr-2">
-          {user.name}
+          {user?.name}
         </h1>
-        {user.verified && (
+        {user?.verified && (
           <img
             src="/src/img/assets/tick.png"
             title="Account verified"
@@ -26,7 +31,7 @@ const UserModal = ({ user }) => {
             className="w-[20px]"
           />
         )}
-        {!user.verified && (
+        {!user?.verified && (
           <img
             src="/src/img/assets/cross.png"
             title="Account not verified"

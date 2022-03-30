@@ -19,6 +19,7 @@ const AuthContext = createContext({
   isLoggedIn: false,
   error: "",
   logIn: (user) => {},
+  loginSuccess: () => {},
   logOut: () => {},
   handleFetching: () => {},
   setError: (message) => {},
