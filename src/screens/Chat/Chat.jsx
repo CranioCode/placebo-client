@@ -13,7 +13,7 @@ const Chat = () => {
 
   // const { user } = useContext(AuthContext);
 
-  // const socket = useSocket();
+  const socket = useSocket();
 
   // useEffect(() => {
   //   user?.uid &&
