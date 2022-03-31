@@ -83,8 +83,6 @@ const Chat = () => {
       return [...prevCurrentMessages, message];
     });
     
-    console.log(currentMessages);
-
     await fetch(`${import.meta.env.VITE_BACKEND_API}/message/`, {
       credentials: "include",
       method: "POST",
