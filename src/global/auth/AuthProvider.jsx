@@ -7,7 +7,7 @@ import { ERROR, FETCHING, LOGIN, LOGINSUCCESS, LOGOUT } from "./auth-actions";
 const AUTH_STATE = {
   user: {
     email: "",
-    uid: "",
+    _id: "",
     role: "",
     name: "",
     dob: "",

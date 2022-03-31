@@ -17,6 +17,8 @@ const UserModal = ({ user }) => {
     authCtx.logOut();
   };
 
+  console.log(authCtx.user);
+
   return (
     <div className="userModal bg-quaternary w-[20vw] z-10 absolute right-[2rem] px-[0.2vw] rounded-b-[6px]">
       <div className="flex justify-center items-center flex-wrap h-[10vh]">

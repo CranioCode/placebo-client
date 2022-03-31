@@ -1,6 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { fetchAllDoctors } from "../../global/doctor-helpers";
+
 import { DoctorCard, Input } from "../../components";
 
 const Doctors = () => {
@@ -74,15 +76,15 @@ const Doctors = () => {
   );
 
   // ? Fetch All Doctors on Load
-  // useEffect(() => {
-  //   (async () => {
-  //     const { success, data } = await fetchAllDoctors();
-  //     if (success) {
-  //       setDoctors([...data]);
-  //       setDisplayDoctors(data);
-  //     }
-  //   })();
-  // }, []);
+  useEffect(() => {
+    (async () => {
+      const { success, message } = await fetchAllDoctors();
+      if (success) {
+        setDoctors([...message]);
+        setDisplayDoctors(message);
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     const spl = [];
@@ -156,7 +158,7 @@ const Doctors = () => {
       </div>
       <div className="px-[4vh] py-[8vh] flex flex-wrap justify-evenly">
         {displayDoctors.map((doctor) => (
-          <DoctorCard onClick={handleClick} doctor={doctor} key={doctor.uid} />
+          <DoctorCard onClick={handleClick} doctor={doctor} key={doctor._id} />
         ))}
         {!displayDoctors.length && "No doctors found."}
       </div>

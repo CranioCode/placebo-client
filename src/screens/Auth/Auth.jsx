@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 // Context
 import AuthContext from "../../global/auth/auth-context";
@@ -42,6 +42,8 @@ const Auth = () => {
 
   // Search Parameter
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const navigate = useNavigate();
 
   // Context
   const authCtx = useContext(AuthContext);
@@ -118,7 +120,10 @@ const Auth = () => {
           });
         }
         if (data.success) {
-          authCtx.loginSuccess();
+          authCtx.logIn({ email, role: "doctor" });
+          if (authCtx.user.verified === false) {
+            navigate({ pathname: "/otp/verify" });
+          }
         } else {
           authCtx.setError(data.error);
         }
@@ -139,7 +144,10 @@ const Auth = () => {
           });
         }
         if (data.success) {
-          authCtx.loginSuccess();
+          authCtx.logIn({ email, role: "user" });
+          if (authCtx.user.verified === false) {
+            navigate({ pathname: "/otp/verify" });
+          }
         } else {
           authCtx.setError(data.error);
         }
@@ -159,7 +167,7 @@ const Auth = () => {
   }, [authFormData, authState]);
 
   useEffect(() => {
-    if (authCtx.error) {
+    if (authCtx.error !== "You are not authenticated. Please sign in.") {
       setError(authCtx.error);
     }
   }, [authCtx.error]);

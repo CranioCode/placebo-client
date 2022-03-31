@@ -4,9 +4,10 @@ const DoctorCard = ({ onClick, doctor }) => {
   return (
     <article
       onClick={() => {
-        onClick(doctor.uid);
+        onClick(doctor._id);
       }}
-      className="w-1/4 h-[38vh] mx-[2vh] mb-[4vh] cursor-pointer shadow-lg rounded-lg relative hover:scale-105 transition-all">
+      className="w-1/4 h-[38vh] mx-[2vh] mb-[4vh] cursor-pointer shadow-lg rounded-lg relative hover:scale-105 transition-all"
+    >
       <div className="h-2/5 w-full bg-tertiary rounded-t-lg flex justify-center items-center">
         <h1 className="text-back font-semibold text-3xl ">{doctor.name}</h1>
       </div>
@@ -31,7 +32,7 @@ const DoctorCard = ({ onClick, doctor }) => {
           </p>
         </div>
         <div className="absolute right-[5%] top-1/2 -translate-y-1/2 flex justify-center items-center">
-          <span className="mr-2 text-2xl">{doctor.rating.value}</span>
+          <span className="mr-2 text-2xl">{doctor?.rating?.value}</span>
           <img
             src="/src/img/assets/star.png"
             alt="rating"
@@ -40,7 +41,7 @@ const DoctorCard = ({ onClick, doctor }) => {
         </div>
         <div className="p-[2vh] absolute top-[60%]">
           <p className="text-justify leading-5">
-            {doctor.description.replace(/^(.{150}[^\s]*).*/, "$1")}...
+            {doctor?.description?.replace(/^(.{150}[^\s]*).*/, "$1")}...
           </p>
         </div>
       </div>
