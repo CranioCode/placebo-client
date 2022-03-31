@@ -6,9 +6,10 @@ import AuthContext from "../../global/auth/auth-context";
 import { Button, Input } from "../../components";
 
 import { required } from "../../global/formValidation";
+import { getDoctor } from "../../global/doctor-helpers";
+import { createAppointment } from "../../global/appointment-helpers";
 
 import "./Appointment.scss";
-import { getDoctor } from "../../global/doctor-helpers";
 
 const Appointment = () => {
   const authCtx = useContext(AuthContext);
@@ -17,7 +18,6 @@ const Appointment = () => {
     name: authCtx.user.name,
     reason: "",
     email: authCtx.user.email,
-    phone: authCtx.user.phoneNumber,
     appointment: "",
   });
   const [error, setError] = useState(null);
@@ -47,7 +47,24 @@ const Appointment = () => {
     })();
   }, [id]);
 
-  const handleFormSubmission = () => {};
+  const handleFormSubmission = async () => {
+    const doctorId = doctor._id;
+    const { email, reason, appointment } = formData;
+    const start = new Date(appointment).getTime();
+    const end = start + 3600000;
+    const data = await createAppointment(doctorId, {
+      email,
+      doctor: doctorId,
+      reason,
+      start,
+      end,
+    });
+    if (data.success) {
+      navigate({ pathname: "/" });
+    } else {
+      setError(data.error);
+    }
+  };
 
   return (
     <section className="flex justify-center items-center h-[83vh]">
@@ -85,7 +102,6 @@ const Appointment = () => {
             placeholder="Name"
             value={formData.name}
             setValue={handleFormData}
-            verify={required}
           />
           <Input
             containerClasses={["my-1"]}
@@ -93,7 +109,6 @@ const Appointment = () => {
             placeholder="Reason for visit"
             value={formData.reason}
             setValue={handleFormData}
-            verify={required}
           />
           <Input
             containerClasses={["my-1"]}
@@ -101,24 +116,14 @@ const Appointment = () => {
             placeholder="Email"
             value={formData.email}
             setValue={handleFormData}
-            verify={required}
-          />
-          <Input
-            containerClasses={["my-1"]}
-            name="phone"
-            placeholder="Phone"
-            value={formData.phone}
-            setValue={handleFormData}
-            verify={required}
           />
           <Input
             containerClasses={["my-1"]}
             placeholder="Appointment"
             name="appointment"
-            type="date"
+            type="datetime"
             value={formData.appointment}
             setValue={handleFormData}
-            verify={required}
           />
         </div>
         <div className="my-2">

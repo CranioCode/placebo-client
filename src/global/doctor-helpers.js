@@ -15,4 +15,17 @@ const getDoctor = async (id) => {
   return await res.json();
 };
 
-export { fetchAllDoctors, getDoctor };
+/**
+ *
+ * @param {string} yearOfStartingCareer
+ * @returns {number}
+ */
+const calculateExperience = (yearOfStartingCareer) => {
+  if (yearOfStartingCareer) {
+    return new Date().getFullYear() - parseInt(yearOfStartingCareer);
+  } else {
+    return 0;
+  }
+};
+
+export { fetchAllDoctors, getDoctor, calculateExperience };

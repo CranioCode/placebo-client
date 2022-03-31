@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import "./Date.scss";
+import "./DateTime.scss";
 
 /**
  * Props:
@@ -96,7 +96,7 @@ function TextInput(props) {
           className={`input-elem
           ${Object.values(staticInputList).join(" ")}
           ${Object.values(dynamicInputList).join(" ")}`}
-          type="date"
+          type="datetime-local"
           htmlFor={props.for}
           name={props.name}
           onChange={(e) => {

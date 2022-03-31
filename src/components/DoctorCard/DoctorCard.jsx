@@ -1,4 +1,4 @@
-import { calculateExperience } from "../../global/doctor";
+import { calculateExperience } from "../../global/doctor-helpers";
 
 const DoctorCard = ({ onClick, doctor }) => {
   return (
