@@ -65,11 +65,21 @@ function App() {
             ) : (
               <Route path="/otp/verify" element={<OTP />} />
             )}
-            {authCtx.isLoggedIn && (
+            {authCtx.isLoggedIn ? (
               <Route path="/doctor/:id" element={<Profile />} />
+            ) : (
+              <Route
+                path="/doctor/:id"
+                element={<Navigate replace to={"/auth"} />}
+              />
             )}
-            {authCtx.isLoggedIn && (
+            {authCtx.isLoggedIn ? (
               <Route path="/profile/:id" element={<Profile />} />
+            ) : (
+              <Route
+                path="/profile/:id"
+                element={<Navigate replace to={"/auth"} />}
+              />
             )}
             {authCtx.isLoggedIn ? (
               <Route path="/appointment/:id" element={<Appointment />} />

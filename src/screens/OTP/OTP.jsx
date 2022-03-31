@@ -33,6 +33,10 @@ const OTP = () => {
       {
         credentials: "include",
         method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           email,
           otp: otpValue,
@@ -55,6 +59,10 @@ const OTP = () => {
       {
         credentials: "include",
         method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           email,
         }),

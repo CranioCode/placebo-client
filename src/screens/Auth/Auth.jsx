@@ -167,7 +167,10 @@ const Auth = () => {
   }, [authFormData, authState]);
 
   useEffect(() => {
-    if (authCtx.error !== "You are not authenticated. Please sign in.") {
+    if (
+      authCtx.error !== "You are not authenticated. Please sign in." &&
+      authCtx.error !== "User unauthenticated."
+    ) {
       setError(authCtx.error);
     }
   }, [authCtx.error]);

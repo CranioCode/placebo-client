@@ -30,7 +30,7 @@ const login = async (data) => {
   } catch (error) {
     return {
       success: false,
-      error: "User not verified",
+      error: "No user found. Please register",
     };
   }
 };
