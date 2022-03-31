@@ -11,7 +11,7 @@ import { Navbar, Footer, Loader, UserModal } from "./components";
 // Pages imports
 const Home = lazy(() => import("./screens/Home"));
 const Auth = lazy(() => import("./screens/Auth"));
-// const OTPVerification = lazy(() => import("./screens/OTPVerification"));
+const OTP = lazy(() => import("./screens/OTP"));
 const Profile = lazy(() => import("./screens/Profile"));
 const Doctors = lazy(() => import("./screens/Doctors"));
 const Error404 = lazy(() => import("./screens/Error404"));
@@ -56,14 +56,14 @@ function App() {
             )}
 
             {/* OTP Verification */}
-            {/* {authCtx.isLoggedIn ? (
+            {authCtx.user?.verified ? (
               <Route
-                path="/otp/verify/:token"
-                element={<Navigate replace to={"/auth"} />}
+                path="/otp/verify"
+                element={<Navigate replace to={"/"} />}
               />
             ) : (
-              <Route path="/otp/verify/:token" element={<OTPVerification />} />
-            )} */}
+              <Route path="/otp/verify" element={<OTP />} />
+            )}
             {/* {authCtx.isLoggedIn && (
               <Route path="/doctor/:id" element={<Profile />} />
               )} */}
