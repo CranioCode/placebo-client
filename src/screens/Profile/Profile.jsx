@@ -1,21 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+
+import { getUser } from "../../global/auth-helper";
 
 import { Button } from "../../components";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
 
-  // const { id } = useParams();
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   //? Fetch doctor here
-  // useEffect(() => {
-  //   (async () => {
-  //     const { success, data } = await fetchDoctor(id);
-  //     if (success) {
-  //       setUser(data);
-  //     }
-  //   })();
-  // }, [id]);
+  useEffect(() => {
+    (async () => {
+      const data = await getUser(id);
+      if (data.success) {
+        setUser(data.message);
+      }
+    })();
+  }, [id]);
+
+  const handleBookAppointment = () => {
+    if (user?.role === "user") {
+      navigate({ pathname: "/appointment" });
+    }
+  };
 
   return (
     <section className="p-[8vh] flex">
@@ -47,9 +57,9 @@ const Profile = () => {
             <div className="relative mb-[1vh]">
               <span>Address</span>
               <div className="absolute top-0 right-0 text-tertiary">
-                <address>{user?.address.city}</address>
-                <address>{user?.address.state}</address>
-                <address>{user?.address.pincode}</address>
+                <address>{user?.address?.city}</address>
+                <address>{user?.address?.state}</address>
+                <address>{user?.address?.pincode}</address>
               </div>
             </div>
           </div>
@@ -87,7 +97,11 @@ const Profile = () => {
               <span className="text-tertiary font-bold">{user?.charge}</span>
             </div>
             <div className="flex-[50%] mb-4">
-              <Button text="Book Appointment" outline />
+              <Button
+                text="Book Appointment"
+                outline
+                func={handleBookAppointment}
+              />
             </div>
           </div>
           <div className="text-xl mb-6">

@@ -14,6 +14,7 @@ const Auth = lazy(() => import("./screens/Auth"));
 const OTP = lazy(() => import("./screens/OTP"));
 const Profile = lazy(() => import("./screens/Profile"));
 const Doctors = lazy(() => import("./screens/Doctors"));
+const Appointment = lazy(() => import("./screens/Appointment"));
 const Error404 = lazy(() => import("./screens/Error404"));
 
 function App() {
@@ -67,6 +68,14 @@ function App() {
             {/* {authCtx.isLoggedIn && (
               <Route path="/doctor/:id" element={<Profile />} />
               )} */}
+            {authCtx.isLoggedIn ? (
+              <Route path="/appointment" element={<Appointment />} />
+            ) : (
+              <Route
+                path="/appointment"
+                element={<Navigate replace to={"/auth"} />}
+              />
+            )}
             <Route path="/doctor/:id" element={<Profile />} />
             <Route path="/doctors" element={<Doctors />} />
             <Route path="*" element={<Error404 />} />
