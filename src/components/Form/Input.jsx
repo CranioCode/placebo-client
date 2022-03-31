@@ -15,7 +15,7 @@ function Input(props) {
     case "date":
       return <Date {...props} />;
     
-    case "Textarea":
+    case "textarea":
       return <Textarea {...props} />;
       
     default:

@@ -15,10 +15,7 @@ const SocketProvider = ({ children }) => {
   useEffect(() => {
     console.log(import.meta.env.VITE_BACKEND_SOCKET);
     socket.current = io(import.meta.env.VITE_BACKEND_SOCKET, {
-      auth: {
-        // session: Cookies.get("session"),
-        session: null,
-      },
+      withCredentials: true,
     });
 
     socket.current.on("connect", () => console.log("socket connetion"));

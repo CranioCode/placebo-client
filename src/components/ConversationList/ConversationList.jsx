@@ -1,5 +1,5 @@
 import { Conversation } from "../../components";
-// import AuthContext from "../../global/auth/auth-context";
+import AuthContext from "../../global/auth/auth-context";
 import { useContext, useEffect, useState } from "react";
 import { Loader } from "../../components";
 import "./ConversationList.scss";
@@ -8,39 +8,33 @@ const ConversationList = ({ list, handleClick, currentConversationId }) => {
   const [conversation, setConversation] = useState([]);
   const [isConversationsLoaded, setIsConversationsLoaded] = useState(true);
 
-  // const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const fetchPatient = async (uid) => {
-    const patient = await fetch("/api/v1/user/fetch", {
+    const patient = await fetch(`${import.meta.env.VITE_BACKEND_API}/user/${uid}`, {
       credentials: "include",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      method: "POST",
-      body: JSON.stringify({
-        uid: uid,
-      }),
+      method: "GET",
     });
 
-    const patientData = (await patient.json())?.data;
+    const patientData = (await patient.json()).message;
     return patientData;
   };
 
   const fetchDoctor = async (uid) => {
-    const doctors = await fetch("/api/v1/doctor/fetch", {
+    const doctors = await fetch(`${import.meta.env.VITE_BACKEND_API}/doctor/${uid}`, {
       credentials: "include",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      method: "POST",
-      body: JSON.stringify({
-        uid: uid,
-      }),
+      method: "GET",
     });
-
-    return (await doctors.json()).data;
+    const doctorData =  (await doctors.json()).message;
+    return doctorData;
   };
 
   useEffect(() => {
@@ -48,9 +42,9 @@ const ConversationList = ({ list, handleClick, currentConversationId }) => {
       const conversation = await Promise.all(
         list.map(async (elem) => {
           const otherMember = elem?.members?.find(
-            (member) => member !== user?.uid
+            (member) => member !== user?._id
           );
-          const { name, profilePic } = user?.isDoctor
+          const { name, profilePic } = user?.role === "doctor"
             ? await fetchPatient(otherMember)
             : await fetchDoctor(otherMember);
           return { ...elem, name, profilePic };
@@ -69,12 +63,12 @@ const ConversationList = ({ list, handleClick, currentConversationId }) => {
         conversation.map((elem) => (
           <div
             onClick={() => {
-              handleClick(elem.id);
+              handleClick(elem._id);
             }}
-            key={elem.id}>
+            key={elem._id}>
             <Conversation
               isCurrentConversation={
-                elem.id === currentConversationId ? true : false
+                elem._id === currentConversationId ? true : false
               }
               name={elem.name}
               profilePic={elem.profilePic}

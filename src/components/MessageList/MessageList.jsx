@@ -18,10 +18,10 @@ const MessageList = ({ messages, UserUid }) => {
   return (
     <div
       id="messageList"
-      className="grow  overflow-y-scroll overflow-x-hidden py-4">
+      className="mt-auto overflow-y-scroll overflow-x-hidden py-4">
       {messages &&
         messages.map((elem) => (
-          <div className="flex" key={elem.id}>
+          <div className="flex" key={elem._id}>
             <div
               className={`max-w-xl mt-2 rounded-md flex flex-wrap justify-end 
                 ${
@@ -32,7 +32,7 @@ const MessageList = ({ messages, UserUid }) => {
               `}>
               <div className="text-lg p-1">{elem.body}</div>
               <div className="ml-auto mt-auto pl-4 pr-1 text-[0.6rem] italic">
-                {format(new Date(elem.CreatedAt._seconds * 1000))}
+                {format(new Date(elem.createdAt))}
               </div>
             </div>
           </div>

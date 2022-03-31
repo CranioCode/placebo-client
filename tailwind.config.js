@@ -9,6 +9,8 @@ module.exports = {
         secondary: "#90F2FF",
         tertiary: "#7098DA",
         quaternary: "#E0FCFF",
+        quinary: "#DEECF9",
+        senary: "#D0E2F5",
       },
       borderWidth: {
         3: "3px",
