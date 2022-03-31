@@ -21,7 +21,9 @@ const DoctorCard = ({ onClick, doctor }) => {
         </div>
         <div className="absolute mt-2 left-[calc(12vh+5%)]">
           <h2 className="text-base leading-5">
-            {doctor.specializations.map((qualification) => `${qualification},`)}
+            {doctor.specializations.map(
+              (specialization) => `${specialization},`
+            )}
           </h2>
           <p className="text-sm italic leading-4">
             {doctor.qualifications.map((qualification) => `${qualification},`)}
@@ -31,14 +33,14 @@ const DoctorCard = ({ onClick, doctor }) => {
             years
           </p>
         </div>
-        <div className="absolute right-[5%] top-1/2 -translate-y-1/2 flex justify-center items-center">
+        {/* <div className="absolute right-[5%] top-1/2 -translate-y-1/2 flex justify-center items-center">
           <span className="mr-2 text-2xl">{doctor?.rating?.value}</span>
           <img
             src="/src/img/assets/star.png"
             alt="rating"
             className="h-[25px] w-[25px]"
           />
-        </div>
+        </div> */}
         <div className="p-[2vh] absolute top-[60%]">
           <p className="text-justify leading-5">
             {doctor?.description?.replace(/^(.{150}[^\s]*).*/, "$1")}...

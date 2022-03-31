@@ -65,18 +65,21 @@ function App() {
             ) : (
               <Route path="/otp/verify" element={<OTP />} />
             )}
-            {/* {authCtx.isLoggedIn && (
+            {authCtx.isLoggedIn && (
               <Route path="/doctor/:id" element={<Profile />} />
-              )} */}
+            )}
+            {authCtx.isLoggedIn && (
+              <Route path="/profile/:id" element={<Profile />} />
+            )}
             {authCtx.isLoggedIn ? (
-              <Route path="/appointment" element={<Appointment />} />
+              <Route path="/appointment/:id" element={<Appointment />} />
             ) : (
               <Route
                 path="/appointment"
                 element={<Navigate replace to={"/auth"} />}
               />
             )}
-            <Route path="/doctor/:id" element={<Profile />} />
+            {/* <Route path="/doctor/:id" element={<Profile />} /> */}
             <Route path="/doctors" element={<Doctors />} />
             <Route path="*" element={<Error404 />} />
           </Routes>

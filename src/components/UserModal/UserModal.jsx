@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Button } from "..";
 
@@ -11,13 +12,17 @@ import "./UserModal.scss";
 const UserModal = ({ user }) => {
   const authCtx = useContext(AuthContext);
 
+  const navigate = useNavigate();
+
   const handleLogout = async () => {
     authCtx.handleFetching();
     await logout();
     authCtx.logOut();
   };
 
-  console.log(authCtx.user);
+  const handleClickProfile = () => {
+    navigate({ pathname: `/profile/${authCtx.user?._id}` });
+  };
 
   return (
     <div className="userModal bg-quaternary w-[20vw] z-10 absolute right-[2rem] px-[0.2vw] rounded-b-[6px]">
@@ -42,7 +47,11 @@ const UserModal = ({ user }) => {
           />
         )}
       </div>
-      <Button text="Profile" classList={["w-full", "mb-1"]} />
+      <Button
+        text="Profile"
+        classList={["w-full", "mb-1"]}
+        func={handleClickProfile}
+      />
       <Button text="Placeholder1" classList={["w-full", "mb-1"]} />
       <Button text="Placeholder2" classList={["w-full", "mb-1"]} />
       <Button text="Placeholder3" classList={["w-full", "mb-1"]} />

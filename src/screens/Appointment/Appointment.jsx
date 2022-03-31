@@ -1,5 +1,5 @@
-import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useContext, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import AuthContext from "../../global/auth/auth-context";
 
@@ -8,8 +8,9 @@ import { Button, Input } from "../../components";
 import { required } from "../../global/formValidation";
 
 import "./Appointment.scss";
+import { getDoctor } from "../../global/doctor-helpers";
 
-const Appointment = ({ doctor }) => {
+const Appointment = () => {
   const authCtx = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
@@ -20,8 +21,10 @@ const Appointment = ({ doctor }) => {
     appointment: "",
   });
   const [error, setError] = useState(null);
+  const [doctor, setDoctor] = useState(null);
 
   const navigate = useNavigate();
+  const { id } = useParams();
 
   const handleClose = () => {
     navigate({ pathname: "/" });
@@ -33,6 +36,16 @@ const Appointment = ({ doctor }) => {
       [data[0]]: data[1],
     }));
   };
+
+  //? Fetch doctor here
+  useEffect(() => {
+    (async () => {
+      const data = await getDoctor(id);
+      if (data.success) {
+        setDoctor(data.message);
+      }
+    })();
+  }, [id]);
 
   const handleFormSubmission = () => {};
 

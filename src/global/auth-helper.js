@@ -66,16 +66,4 @@ const logout = async () => {
   return await res.json();
 };
 
-const getUser = async (id) => {
-  const res = await fetch(`${import.meta.env.VITE_BACKEND_API}/doctor/${id}`, {
-    method: "GET",
-    credentials: "include",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  });
-  return await res.json();
-};
-
-export { login, signup, logout, getUser };
+export { login, signup, logout };

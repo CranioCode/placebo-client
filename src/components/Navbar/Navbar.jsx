@@ -40,14 +40,14 @@ const Navbar = ({ onProfileClick }) => {
         >
           Doctors
         </NavLink>
-        <NavLink
+        {/* <NavLink
           to={"/specialization"}
           className={({ isActive }) =>
             isActive ? "text-xl underline underline-offset-4" : "text-xl"
           }
         >
           Specialization
-        </NavLink>
+        </NavLink> */}
       </div>
       <div className="w-1/4 flex justify-end">
         {!authCtx.isLoggedIn && (
