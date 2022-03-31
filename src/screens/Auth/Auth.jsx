@@ -1,6 +1,11 @@
-import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
+// Context
+import AuthContext from "../../global/auth/auth-context";
+
+// Utils
+import { login, signup } from "../../global/auth-helper";
 import {
   dateValidation,
   emailValidation,
@@ -38,8 +43,10 @@ const Auth = () => {
   // Search Parameter
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const navigate = useNavigate();
+
   // Context
-  // const authCtx = useContext(AuthContext);
+  const authCtx = useContext(AuthContext);
 
   useEffect(() => {
     searchParams.get("type") === "register"
@@ -88,42 +95,66 @@ const Auth = () => {
 
   // Handling authentication and error state
   const handleAuthentication = async () => {
+    const { fname, lname, dob, dor, email, regNo, password } = authFormData;
+
     //? Authentication using Passport
-    // authCtx.handleFetching();
-    // let data;
-    // try {
-    //   if (authState.isDoctor) {
-    //     if (authState.isLogin) {
-    //       data = await doctorLogin({
-    //         email: authFormData.email,
-    //         password: authFormData.password,
-    //       });
-    //     } else {
-    //       data = await doctorSignUp(authFormData);
-    //     }
-    //     if (data.success) {
-    //       authCtx.logIn({ ...data.data, isDoctor: true });
-    //     } else {
-    //       authCtx.setError(data.data);
-    //     }
-    //   } else {
-    //     if (authState.isLogin) {
-    //       data = await userLogin({
-    //         email: authFormData.email,
-    //         password: authFormData.password,
-    //       });
-    //     } else {
-    //       data = await userSignUp(authFormData);
-    //     }
-    //     if (data.success) {
-    //       authCtx.logIn({ ...data.data, isDoctor: false });
-    //     } else {
-    //       authCtx.setError(data.data);
-    //     }
-    //   }
-    // } catch (error) {
-    //   authCtx.setError(firebaseErrorMessages(error.code));
-    // }
+    authCtx.handleFetching();
+    let data;
+    try {
+      if (authState.isDoctor) {
+        if (authState.isLogin) {
+          data = await login({
+            email,
+            password,
+            role: "doctor",
+          });
+        } else {
+          data = await signup({
+            name: fname + " " + lname,
+            dob: new Date(dob).getTime(),
+            dor: new Date(dor).getTime(),
+            email,
+            regNo,
+            password,
+            role: "doctor",
+          });
+        }
+        if (data.success) {
+          authCtx.logIn({ email, role: "doctor" });
+          if (authCtx.user.verified === false) {
+            navigate({ pathname: "/otp/verify" });
+          }
+        } else {
+          authCtx.setError(data.error);
+        }
+      } else {
+        if (authState.isLogin) {
+          data = await login({
+            email,
+            password,
+            role: "user",
+          });
+        } else {
+          data = await signup({
+            email,
+            password,
+            name: fname + " " + lname,
+            dob: new Date(dob).getTime(),
+            role: "user",
+          });
+        }
+        if (data.success) {
+          authCtx.logIn({ email, role: "user" });
+          if (authCtx.user.verified === false) {
+            navigate({ pathname: "/otp/verify" });
+          }
+        } else {
+          authCtx.setError(data.error);
+        }
+      }
+    } catch (error) {
+      authCtx.setError(error.message);
+    }
   };
 
   useEffect(() => {
@@ -135,12 +166,11 @@ const Auth = () => {
     }
   }, [authFormData, authState]);
 
-  //? Changing the error state when there is error in global state
-  // useEffect(() => {
-  //   if (authCtx.error) {
-  //     setError(authCtx.error);
-  //   }
-  // }, [authCtx.error]);
+  useEffect(() => {
+    if (authCtx.error !== "You are not authenticated. Please sign in.") {
+      setError(authCtx.error);
+    }
+  }, [authCtx.error]);
 
   return (
     <section

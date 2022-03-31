@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useRef } from "react";
 import { io } from "socket.io-client";
-import Cookies from "js-cookie";
+import AuthContext from "./auth/auth-context";
 
 const SocketContext = createContext(); // global socket context
 
@@ -12,20 +12,20 @@ const useSocket = () => {
 const SocketProvider = ({ children }) => {
   const socket = useRef(null);
 
+  const { user } = useContext(AuthContext);
+
   useEffect(() => {
-    socket.current = io(process.env.REACT_APP_BACKEND_SERVER, {
-      auth: {
-        session: Cookies.get("session"),
-      },
+    socket.current = io(import.meta.env.VITE_BACKEND_SOCKET, {
+      withCredentials: true,
     });
 
     socket.current.on("connect", () => console.log("socket connetion"));
 
     socket.current.on("disconnect", () => console.log("disconnected"));
-  }, []);
+  }, [user._id]);
 
   return (
-    <SocketContext.Provider value={socket.current}>
+    <SocketContext.Provider value={socket}>
       {children}
     </SocketContext.Provider>
   );
