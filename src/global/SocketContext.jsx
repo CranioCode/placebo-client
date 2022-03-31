@@ -15,7 +15,6 @@ const SocketProvider = ({ children }) => {
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    console.log(import.meta.env.VITE_BACKEND_SOCKET);
     socket.current = io(import.meta.env.VITE_BACKEND_SOCKET, {
       withCredentials: true,
     });

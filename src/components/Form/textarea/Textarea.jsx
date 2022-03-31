@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef , useEffect} from "react";
 import "./Textarea.scss";
 
 /**
@@ -49,7 +49,7 @@ function Textarea(props) {
   const staticInputList = useCallback(
     () => ({
       width: "w-full",
-      height: props.minHeight ? `h-[${props.minHeight}px]` : "h-full",
+      // height: props.minHeight ? `h-[${props.minHeight}px]` : "h-full",
       padding: "px-2 py-2",
       background: "bg-transparent",
       border: "rounded box-border border-2",
@@ -69,14 +69,18 @@ function Textarea(props) {
     [verified, props]
   )();
 
-  const handleResize = (e) => {
+  const handleResize = () => {
     textArea.current.style.height = "1px";
     textArea.current.style.height =
       Math.min(
         parseInt(props.maxHeight) || 1600,
-        Math.max(parseInt(props.minHeight) || 0, e.target.scrollHeight)
+        Math.max(parseInt(props.minHeight) || 0, textArea.current.scrollHeight)
       ) + "px";
   };
+
+  useEffect(() => {
+    textArea.current && handleResize();
+  },[]);
 
   return (
     <>
@@ -106,7 +110,7 @@ function Textarea(props) {
               e.target.value = e.target.value.trim();
             }
             props.setValue(e.target.value);
-            handleResize(e);
+            handleResize();
           }}
           value={props.value}
           placeholder={props.placeholder} //Hidden in css but required for selectors

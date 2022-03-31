@@ -1,7 +1,11 @@
+import { useRef, useEffect } from "react";
 import { format } from "timeago.js";
 import "./MessageList.scss";
 
 const MessageList = ({ messages, UserUid }) => {
+
+  const scrollView = useRef();
+
   const sendMessageStyles = {
     marginX: "ml-auto mr-8",
     border: "border-solid border-2 border-tertiary",
@@ -15,13 +19,17 @@ const MessageList = ({ messages, UserUid }) => {
     color: "text-back",
   };
 
+  useEffect(() => {
+    scrollView?.current?.scrollIntoView();
+  },[messages])
+
   return (
     <div
       id="messageList"
       className="mt-auto overflow-y-scroll overflow-x-hidden py-4">
       {messages &&
         messages.map((elem) => (
-          <div className="flex" key={elem._id}>
+          <div className="flex" key={elem._id} ref={scrollView}>
             <div
               className={`max-w-xl mt-2 rounded-md flex flex-wrap justify-end 
                 ${

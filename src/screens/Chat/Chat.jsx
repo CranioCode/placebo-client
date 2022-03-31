@@ -64,7 +64,7 @@ const Chat = () => {
   };
 
   const handleMessageSend = async () => {
-    if (!currentConversationId) return;
+    if (!currentConversationId  || !newMessage) return;
 
     const { _id, members } = conversations.find(
       (elem) => elem?._id === currentConversationId
@@ -116,7 +116,7 @@ const Chat = () => {
             containerClasses={["mx-4"]}
             value={newMessage}
             setValue={setNewMessage}
-            minHeight="40"
+            minHeight="46"
             maxHeight="124"
           />
           <Button
