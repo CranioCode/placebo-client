@@ -3,7 +3,7 @@ import { createContext } from "react";
 const AuthContext = createContext({
   user: {
     email: "",
-    uid: "",
+    _id: "",
     role: "",
     name: "",
     dob: "",
