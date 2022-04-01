@@ -5,7 +5,8 @@ export { default as Button } from "./Button/Button";
 export { default as Input } from "./Form/Input";
 export { default as UserModal } from "./UserModal/UserModal";
 export { default as DoctorCard } from "./DoctorCard/DoctorCard";
-export {default as ConversationList} from "./ConversationList/ConversationList"
-export {default as Conversation} from "./Conversation/Conversation"
-export {default as MessageList} from "./MessageList/MessageList"
-export {default as AppointmentList} from "./AppointmentList/AppointmentList"
+export { default as ConversationList } from "./ConversationList/ConversationList";
+export { default as Conversation } from "./Conversation/Conversation";
+export { default as MessageList } from "./MessageList/MessageList";
+export { default as AppointmentList } from "./AppointmentList/AppointmentList";
+export { default as Accordion } from "./Accordion/Accordion";

@@ -28,4 +28,19 @@ const calculateExperience = (yearOfStartingCareer) => {
   }
 };
 
-export { fetchAllDoctors, getDoctor, calculateExperience };
+const fetchTestimonials = async (id) => {
+  const res = await fetch(
+    `${import.meta.env.VITE_BACKEND_API}/testimonial/doctor/${id}`,
+    {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return await res.json();
+};
+
+export { fetchAllDoctors, getDoctor, calculateExperience, fetchTestimonials };
