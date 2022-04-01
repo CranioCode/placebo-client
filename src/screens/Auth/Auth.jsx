@@ -121,8 +121,8 @@ const Auth = () => {
         }
         if (data.success) {
           authCtx.logIn({ email, role: "doctor" });
-          if (authCtx.user.verified === false) {
-            navigate({ pathname: "/otp/verify" });
+          if (!authState.isLogin) {
+            navigate("/otp/verify");
           }
         } else {
           authCtx.setError(data.error);
@@ -144,9 +144,9 @@ const Auth = () => {
           });
         }
         if (data.success) {
-          authCtx.logIn({ email, role: "user" });
-          if (authCtx.user.verified === false) {
-            navigate({ pathname: "/otp/verify" });
+          authCtx.logIn({ user: { email }, role: "user" });
+          if (!authState.isLogin) {
+            navigate("/otp/verify");
           }
         } else {
           authCtx.setError(data.error);

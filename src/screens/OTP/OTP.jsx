@@ -48,6 +48,7 @@ const OTP = () => {
 
     if (data.success) {
       setMessage(data.message);
+      navigate("/");
     } else {
       setMessage(data.error);
     }

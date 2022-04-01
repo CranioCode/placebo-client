@@ -14,4 +14,19 @@ const createAppointment = async (id, data) => {
   return await res.json();
 };
 
-export { createAppointment };
+const getAppointment = async (id) => {
+  const res = await fetch(
+    `${import.meta.env.VITE_BACKEND_API}/appointment/${id}`,
+    {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return await res.json();
+};
+
+export { createAppointment, getAppointment };

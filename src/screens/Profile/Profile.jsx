@@ -1,14 +1,18 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { getDoctor } from "../../global/doctor-helpers";
+import { fetchTestimonials, getDoctor } from "../../global/doctor-helpers";
 import { getUser } from "../../global/user-helpers";
 
-import { Button } from "../../components";
+import { Accordion, Button } from "../../components";
 import AuthContext from "../../global/auth/auth-context";
+import { getAppointment } from "../../global/appointment-helpers";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
+  const [testimonials, setTestimonials] = useState([]);
+  const [appointments, setAppointments] = useState([]);
+  // const [highlights, setHighlights] = useState([]);
 
   const authCtx = useContext(AuthContext);
 
@@ -36,7 +40,27 @@ const Profile = () => {
     }
   };
 
-  console.log(user);
+  useEffect(() => {
+    (async () => {
+      if (user?._id) {
+        const testimonialData = await fetchTestimonials(user._id);
+        if (testimonialData.success) {
+          setTestimonials(testimonialData.message);
+        }
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      if (!(authCtx.user?.role === "user" && user?.registrationNumber)) {
+        const res = await getAppointment(authCtx.user?._id);
+        if (res.success) {
+          setAppointments(res.message);
+        }
+      }
+    })();
+  }, []);
 
   return (
     <section className="p-[8vh] flex">
@@ -74,8 +98,8 @@ const Profile = () => {
           </div>
         </div>
       </article>
-      <article className="w-2/3">
-        {authCtx.user?.role === "user" && user?.registrationNumber && (
+      {authCtx.user?.role === "user" && user?.registrationNumber ? (
+        <article className="w-2/3">
           <div>
             <div className="text-[6vh] mb-6 border-b-2 border-primary relative">
               {user?.name}{" "}
@@ -108,22 +132,71 @@ const Profile = () => {
                   &#8377; {user?.charge}
                 </span>
               </div>
-              {authCtx.user?._id !== user?._id}
               <div className="flex-[50%] mb-4">
-                <Button
-                  text="Book Appointment"
-                  outline
-                  func={handleBookAppointment}
-                />
+                <div className="inline-block mr-2">SPECIALIZATIONS :</div>
+                <span className="text-tertiary font-bold">
+                  {user?.specializations.map((sp) => `${sp}, `)}
+                </span>
               </div>
+              <div className="flex-[50%] mb-4">
+                <div className="inline-block mr-2">QUALIFICATIONS :</div>
+                <span className="text-tertiary font-bold">
+                  {user?.qualifications.map((qua) => `${qua}, `)}
+                </span>
+              </div>
+              {authCtx.user?._id !== user?._id && (
+                <div className="flex-[50%] mb-4">
+                  <Button
+                    text="Book Appointment"
+                    outline
+                    func={handleBookAppointment}
+                  />
+                </div>
+              )}
             </div>
             <div className="text-xl mb-6">
               <p>{user?.description}</p>
             </div>
           </div>
-        )}
-        <div className="accordion">Accordion Here</div>
-      </article>
+          {/* <div className="accordion">Accordion Here</div> */}
+          <Accordion
+            data={[
+              {
+                title: "Testimonial",
+                body: (
+                  <div>
+                    {testimonials.map((tes) => (
+                      <div key={tes._id}>
+                        <p>tes.body</p>
+                      </div>
+                    ))}
+                  </div>
+                ),
+              },
+              {
+                title: "Patients",
+                body: "Patients",
+              },
+              {
+                title: "Highlights",
+                body: "Highlights",
+              },
+            ]}
+          />
+        </article>
+      ) : (
+        <article className="w-[70%]">
+          {appointments.map((app) => {
+            <div className="border px-8 py-2 cursor-pointer">
+              <div className="flex justify-between">
+                <div>{app?.doctorName}</div>
+                <div>Date: {new Date(app?.start)}</div>
+              </div>
+              <p>Reason: {app?.reason}</p>
+            </div>;
+          })}
+        </article>
+      )}
     </section>
   );
 };
