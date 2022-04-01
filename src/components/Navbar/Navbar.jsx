@@ -40,7 +40,7 @@ const Navbar = ({ onProfileClick }) => {
         >
           Doctors
         </NavLink>
-        <NavLink
+        {/* <NavLink
           to={"/specialization"}
           className={({ isActive }) =>
             isActive ? "text-xl underline underline-offset-4" : "text-xl"
@@ -48,6 +48,7 @@ const Navbar = ({ onProfileClick }) => {
         >
           Specialization
         </NavLink>
+        </NavLink> */}
         <NavLink
           to={"/chat"}
           className={({ isActive }) =>
