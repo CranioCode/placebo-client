@@ -8,3 +8,4 @@ export { default as DoctorCard } from "./DoctorCard/DoctorCard";
 export {default as ConversationList} from "./ConversationList/ConversationList"
 export {default as Conversation} from "./Conversation/Conversation"
 export {default as MessageList} from "./MessageList/MessageList"
+export {default as AppointmentList} from "./AppointmentList/AppointmentList"

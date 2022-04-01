@@ -15,6 +15,7 @@ const OTP = lazy(() => import("./screens/OTP"));
 const Profile = lazy(() => import("./screens/Profile"));
 const Doctors = lazy(() => import("./screens/Doctors"));
 const Chat = lazy(() => import("./screens/Chat"));
+const Dashboard = lazy(() => import("./screens/Dashboard"));
 const Error404 = lazy(() => import("./screens/Error404"));
 
 function App() {
@@ -71,6 +72,7 @@ function App() {
               <Route path="/doctor/:id" element={<Profile />} />
               )} */}
             <Route path="/doctor/:id" element={<Profile />} />
+            <Route path="/doctor/dasboard/:id" element={<Dashboard />} />
             <Route path="/doctors" element={<Doctors />} />
             <Route path="*" element={<Error404 />} />
           </Routes>

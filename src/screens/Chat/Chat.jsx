@@ -98,7 +98,7 @@ const Chat = () => {
   };
 
   return (
-    <section id="chat" className="flex min-w-[100%] h-full abosolute">
+    <section id="chat" className="flex min-w-[100%] h-full">
       <ConversationList
         currentConversationId={currentConversationId}
         isConversationsLoaded={isConversationsLoaded}

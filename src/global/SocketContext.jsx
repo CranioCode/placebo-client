@@ -22,7 +22,7 @@ const SocketProvider = ({ children }) => {
     socket.current.on("connect", () => console.log("socket connetion"));
 
     socket.current.on("disconnect", () => console.log("disconnected"));
-  }, [user._id]);
+  }, [user?._id]);
 
   return (
     <SocketContext.Provider value={socket}>
